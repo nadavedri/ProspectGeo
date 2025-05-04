@@ -1,5 +1,5 @@
 from typing import Optional, Dict, List
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 def _prospect_qualifies(
@@ -49,7 +49,7 @@ def transform_prospect_data(country_regions, user_settings, prospects_chunk):
                 user_settings=settings,
                 country_to_region=country_regions,
             ),
-            "qualification_timestamp": datetime.utcnow(),
+            "qualification_timestamp": datetime.now(timezone.utc),
         }
         qualification_results.append(result)
 
