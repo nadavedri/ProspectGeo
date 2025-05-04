@@ -1,0 +1,16 @@
+[project]
+name = "prospectgeo"
+version = "0.1.0"
+description = "Location-Based Prospect Qualification System"
+authors = [
+    {name = "nadavedri",email = "nadav052433@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
