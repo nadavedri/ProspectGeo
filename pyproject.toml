@@ -8,6 +8,7 @@ packages = [{ include = "prospectgeo", from = "src" }]
 
 [tool.poetry.dependencies]
 python = ">=3.12"
+psycopg2-binary = "^2.9.10"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
@@ -53,3 +54,6 @@ known-third-party = ["pytest"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 10
+
+[tool.poetry.scripts]
+prospectgeo = "your_project.main:main"
