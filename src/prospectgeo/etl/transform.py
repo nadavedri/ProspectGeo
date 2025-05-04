@@ -1,13 +1,13 @@
 from typing import Optional, Dict, List
 from datetime import datetime
 
-def _qualifies(
+
+def _prospect_qualifies(
     company_country: str,
     company_state: Optional[str],
     user_settings: Dict[str, Optional[List[str]]],
-    country_to_region: Dict[str, List[str]]
+    country_to_region: Dict[str, List[str]],
 ) -> bool:
-
     location_include = user_settings.get("location_include", [])
     location_exclude = user_settings.get("location_exclude") or []
 
@@ -30,22 +30,27 @@ def _qualifies(
 
     return False
 
-def transform_data(country_regions, user_settings, prospects_chunk):
+
+def transform_prospect_data(country_regions, user_settings, prospects_chunk):
     qualification_results = []
 
-    for user_id, settings in user_settings.items():
-        for prospect in prospects_chunk:
-            result = {
-                'user_id': user_id,
-                'prospect_id': prospect['prospect_id'],
-                'qualifies': _qualifies(
-                    company_country=prospect['company_country'],
-                    company_state=prospect.get('company_state'),
-                    user_settings=settings,
-                    country_to_region=country_regions
-                ),
-                'qualification_timestamp': datetime.utcnow()
-            }
-            qualification_results.append(result)
+    for prospect in prospects_chunk:
+        user_id = prospect["user_id"]
+        settings = user_settings.get(user_id)
+        if not settings:
+            continue  # or handle default
+
+        result = {
+            "user_id": user_id,
+            "prospect_id": prospect["prospect_id"],
+            "qualifies": _prospect_qualifies(
+                company_country=prospect["company_country"],
+                company_state=prospect.get("company_state"),
+                user_settings=settings,
+                country_to_region=country_regions,
+            ),
+            "qualification_timestamp": datetime.utcnow(),
+        }
+        qualification_results.append(result)
 
     return qualification_results
