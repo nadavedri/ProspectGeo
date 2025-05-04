@@ -3,12 +3,13 @@ from prospectgeo.etl.transform import transform_prospect_data
 from prospectgeo.etl.load import batch_insert_data
 from prospectgeo.utils.logging_config import logger  
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from prospectgeo.config import current_config
 
 
 @retry(
-    stop=stop_after_attempt(3),  # Retry up to 3 times
-    wait=wait_exponential(multiplier=1, min=2, max=10),  # Exponential backoff
-    retry=retry_if_exception_type(Exception),  # Retry on any exception
+    stop=stop_after_attempt(current_config.max_retries), 
+    wait=wait_exponential(multiplier=1, min=current_config.retry_delay_min, max=current_config.retry_delay_max), 
+    retry=retry_if_exception_type(Exception),  
 )
 def _run_prospect_pipeline():
     try:
