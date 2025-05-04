@@ -6,3 +6,7 @@ from prospectgeo.config import current_config
 def main():
     setup_databases()
     run_etl_pipeline(current_config.pipeline_name)
+
+
+if __name__ == "__main__":
+    main()
