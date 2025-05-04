@@ -58,4 +58,4 @@ known-third-party = ["pytest"]
 max-complexity = 10
 
 [tool.poetry.scripts]
-prospectgeo = "your_project.main:main"
+prospectgeo = "prospectgeo.main:main"
