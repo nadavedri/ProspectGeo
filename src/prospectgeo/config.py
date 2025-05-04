@@ -16,10 +16,12 @@ class Config:
 
 class DevelopmentConfig(Config):
     debug = True
+    log_level = "DEBUG" 
 
 
 class ProductionConfig(Config):
     debug = False
+    log_level = "INFO"
 
 
 config_by_name = {"development": DevelopmentConfig, "production": ProductionConfig}
