@@ -8,6 +8,8 @@ class Config:
     postgres_user = os.getenv("POSTGRES_USER", "default_user")
     postgres_password = os.getenv("POSTGRES_PASSWORD", "default_password")
     postgres_db = os.getenv("POSTGRES_DB", "default_db")
+    postgres_host=os.getenv("POSTGRES_HOST", "localhost"),
+    postgres_port=os.getenv("POSTGRES_PORT", "5432"),
 
     pipeline_name = os.getenv("PIPELINE_NAME", "prospect")
     read_chunk_size = int(os.getenv("READ_CHUNK_SIZE", 1000))
