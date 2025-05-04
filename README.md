@@ -1,17 +1,16 @@
+# 📍 Location-Based Prospect Qualification System
 
-# Location-Based Prospect Qualification System
-
-This project implements a location-based prospect qualification system that evaluates whether prospects meet users’ location preferences. It reads input data from CSV and JSON files, processes it using a custom matching logic, and stores the results in a PostgreSQL database.
+This project implements a location-based prospect qualification system that evaluates whether prospects meet users' location preferences. It reads input data from CSV and JSON files, processes it using custom matching logic, and stores the results in a PostgreSQL database.
 
 ---
 
 ## 🛠 Technologies Used
 
-- Python 3.9+
-- [Poetry](https://python-poetry.org/)
-- PostgreSQL
-- Docker
-- pytest
+* Python 3.9+
+* [Poetry](https://python-poetry.org/)
+* PostgreSQL
+* Docker & Docker Compose
+* pytest
 
 ---
 
@@ -25,47 +24,50 @@ cd ProspectGeo
 ```
 
 ### 2. Install Dependencies with Poetry
-install Petry with pipx
+
+Make sure you have Poetry installed (via [pipx](https://pypa.github.io/pipx/)):
+
 ```bash
 pipx install poetry
 ```
-install dependencies
+
+Install project dependencies:
+
 ```bash
 poetry install
 ```
 
-### 3. Set Up PostgreSQL with dockerfile or docker-compose
+### 3. Configure and Launch PostgreSQL with Docker Compose
 
-
-**dockerfile**
+1. Copy the `.env.example` file to `.env`:
 
 ```bash
-docker build -t postgres-container:latest .
-docker run --env-file .env --name prospectgeo-postgres -p 5432:5432 postgres-container:latest
+cp .env.example .env
 ```
+
+2. Launch the PostgreSQL and app containers:
+
+```bash
+docker-compose up -d
+```
+
+> ⏳ **Note**: The application waits 10 seconds for the database to become ready.
 
 ---
 
-## ▶️ Running the Application
+## ▶️ Running the Application Locally
 
-Make sure your input files are placed in the `data/` directory in `src/prospectgeo`:
+Ensure your input files are placed in the `src/prospectgeo/data/` directory:
 
-- `prospects.csv`
-- `country-to-regions-mapping.json`
-- `users-locations-settings.json`
+* `prospects.csv`
+* `country-to-regions-mapping.json`
+* `users-locations-settings.json`
 
-run local:
+Update the `POSTGRES_HOST` value in your `.env` file to `localhost`:
 
 ```bash
 poetry run prospectgeo
 ```
-
-Run remote:
-
-```bash
-ddocker-compose up -d
-```
-
 
 ---
 
@@ -73,22 +75,35 @@ ddocker-compose up -d
 
 A prospect qualifies if:
 
-- Their `company_country` or `company_state` (if in the US) is:
-  - Directly listed in the user's `location_include`, or
-  - Mapped to a region listed in `location_include`,
-- And it is **not** listed in the user's `location_exclude`.
+* Their `company_country` or (if in the US) `company_state` is:
+
+  * Directly listed in the user's `location_include`, **or**
+  * Mapped to a region listed in `location_include`
+* And **not** present in the user's `location_exclude`
 
 ---
 
-## 🧪 Run Tests
+## 🧪 Running Tests
 
-To ensure everything works as expected:
+To verify that everything works correctly:
+
 ```bash
 poetry run pytest
 ```
 
-## Development
-- Linting: `poetry run ruff check`
-- Formatting: `poetry run ruff format`
+---
 
+## 🧹 Development Tools
+
+* **Linting**:
+
+  ```bash
+  poetry run ruff check
+  ```
+
+* **Formatting**:
+
+  ```bash
+  poetry run ruff format
+  ```
 
