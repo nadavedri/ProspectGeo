@@ -1,6 +1,5 @@
-FROM python:3.11-slim
-WORKDIR /app
-COPY pyproject.toml poetry.lock ./
-RUN pip install poetry && poetry install --no-root
-COPY . .
-CMD ["poetry", "run", "python", "app.main:app"]
+# Use the official PostgreSQL image from the Docker Hub
+FROM postgres:13
+
+# Expose the default PostgreSQL port
+EXPOSE 5432
