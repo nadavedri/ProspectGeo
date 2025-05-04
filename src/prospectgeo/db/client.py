@@ -1,6 +1,6 @@
 from psycopg2 import connect
 import os
-from prospectgeo.utils.logging_config import logger  
+from prospectgeo.utils.logging_config import logger
 from prospectgeo.config import current_config
 
 
@@ -11,9 +11,11 @@ def _get_postgres_connection():
             dbname=current_config.postgres_db,
             user=current_config.postgres_user,
             password=current_config.postgres_password,
-            host=current_config.postgres_host,
-            port=current_config.postgres_port,
+            host=os.getenv("POSTGRES_HOST", "db"),  
+            port=os.getenv("POSTGRES_PORT", "5432"),
         )
+
+
         logger.info("Successfully connected to the PostgreSQL database.")
         return connection
     except Exception as e:
