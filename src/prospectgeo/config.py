@@ -8,21 +8,18 @@ class Config:
     postgres_user = os.getenv("POSTGRES_USER", "default_user")
     postgres_password = os.getenv("POSTGRES_PASSWORD", "default_password")
     postgres_db = os.getenv("POSTGRES_DB", "default_db")
-    postgres_host=os.getenv("POSTGRES_HOST", "localhost"),
-    postgres_port=os.getenv("POSTGRES_PORT", "5432"),
 
     pipeline_name = os.getenv("PIPELINE_NAME", "prospect")
     read_chunk_size = int(os.getenv("READ_CHUNK_SIZE", 1000))
     write_chunk_size = int(os.getenv("WRITE_CHUNK_SIZE", 1000))
     max_retries = int(os.getenv("MAX_RETRIES", 3))
-    retry_delay_min = int(os.getenv("RETRY_DELAY_MIN", 2))  
-    retry_delay_max= int(os.getenv("RETRY_DELAY_MAX", 10))
-
+    retry_delay_min = int(os.getenv("RETRY_DELAY_MIN", 2))
+    retry_delay_max = int(os.getenv("RETRY_DELAY_MAX", 10))
 
 
 class DevelopmentConfig(Config):
     debug = True
-    log_level = "DEBUG" 
+    log_level = "DEBUG"
 
 
 class ProductionConfig(Config):
