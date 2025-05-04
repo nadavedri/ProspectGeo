@@ -6,7 +6,9 @@ from prospectgeo.utils.logging_config import logger
 
 
 def batch_insert_data(qualification_results, db_type="postgres"):
-    logger.info("Starting batch_insert_data with %d results", len(qualification_results))
+    logger.info(
+        "Starting batch_insert_data with %d results", len(qualification_results)
+    )
     conn = get_db_client(db_type)
     cur = conn.cursor()
     query = insert_qualification_results()
