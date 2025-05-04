@@ -11,10 +11,9 @@ def _get_postgres_connection():
             dbname=current_config.postgres_db,
             user=current_config.postgres_user,
             password=current_config.postgres_password,
-            host=os.getenv("POSTGRES_HOST", "db"),  
+            host=os.getenv("POSTGRES_HOST", "db"),
             port=os.getenv("POSTGRES_PORT", "5432"),
         )
-
 
         logger.info("Successfully connected to the PostgreSQL database.")
         return connection
